@@ -1,0 +1,137 @@
+<odoo>
+<data>
+
+   <record id='hms_patient_action' model="ir.actions.act_window">
+    <field name="name">Patients</field>
+    <field name="res_model">hms.patient</field>
+   </record>
+
+
+
+
+
+    <!--tree view-->
+   <record  id="hms_patient_tree_view" model="ir.ui.view">
+   <field name="name"> Patient tree view</field>
+   <field name="model">hms.patient</field>
+    <field name="arch" type="xml">
+
+
+    <tree>
+    <field name="fName" />
+    <field name="lName"/>
+    <field name="age" readonly='1'/>
+     <field name="birthDate"/>
+    <field name="address"/>
+     <field name="CR"/>
+    <field name="bloodType"/>
+    <field name="history"/>
+    <field name="PCR"/>
+    <field name="email"/>
+    </tree>
+    </field>
+   
+   </record>
+
+
+
+   <!--form view-->
+ 
+   <record  id="hms_patient_form_view" model="ir.ui.view">
+   <field name="name"> Patient tree view</field>
+   <field name="model">hms.patient</field>
+    <field name="arch" type="xml">
+
+
+    <form>
+
+    <header> 
+
+    <field name="state"  widget="statusbar" nolabel="1"  options="{'clickable':'1'}"/>
+    
+    </header>
+
+    <sheet>
+
+  <notebook string="Patient">
+
+  <page string="Personal Information">
+    <group string="Personal Information">
+    <field name="fName" required = '1'/>
+    <field name="lName" required = '1' />
+    <field name="age"/>
+    <field name="birthDate"/>
+    <field name="address"/>
+    <field name="image"/>
+    <field name="email"/>
+    </group>
+
+    </page>
+
+   <page string="Blood">
+    <group string="Blood">
+    <field name="CR"  attrs ="{ 'required' : [('PCR' ,  '=' , 'p')] }" />
+    <field name="bloodType"/>
+    <field name="history" attrs ="{ 'invisible' : [('age' ,  '&lt;' , 50)] }" />
+    <field name="PCR"/>  <!--conditoion-->
+    </group>
+    </page>
+
+
+    <page string="Department Info">
+    <group string="Department">
+    <field name="department_id" domain="[('is_opened' ,'=' , True)]"/>
+    <field name="department_capacity" />
+    </group>
+    </page>
+
+
+
+    <page string="Doctor" >
+    <group string="Doctor">
+     <field name="doctor_ids"  widget="many2many_tags" groups= 'hospital.managers_group'
+     attrs = "{'readonly' : [('department_id' , '=', False)]}">
+     <!--<tree>-->
+     <field name="fName"/>
+     <field name="lName"/>
+     <!--</tree>-->
+     </field>
+    </group>
+    </page>
+
+
+
+
+    <page string="State Log">
+    <group>
+     <field name="state_log">
+
+    <tree>
+     <field name="description"/>
+     <field name="create_date" />
+     <field name="create_uid" />
+     </tree>
+
+     </field>
+    </group>
+    </page>
+
+   </notebook>
+
+    </sheet>
+
+    </form>
+    </field>
+   
+   </record>
+
+
+
+
+
+  <menuitem  name="Hospital"  id="hms_base_menu"/>
+  <menuitem  name="Patients" id='patient_menu' parent="hms_base_menu"
+  action='hms_patient_action'
+  />
+</data>
+</odoo>

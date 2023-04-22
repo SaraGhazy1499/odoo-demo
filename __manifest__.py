@@ -1,0 +1,15 @@
+{
+    'name':"Hospital",
+    'author':"sara",
+    'depends':['crm'],
+    'data':[
+            'security/res_groups.xml',
+            'security/ir.model.access.csv',
+            'views/hms_patient_view.xml',
+            'views/hms_department_view.xml',
+            'views/hms_doctor_view.xml',
+            'views/hms_customer_view.xml',
+            'reports/patients/hms_patient_template.xml',
+            'reports/reports.xml',
+            ]
+}
